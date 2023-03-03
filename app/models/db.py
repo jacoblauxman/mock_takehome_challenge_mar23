@@ -1,4 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.schema import Column
+from sqlalchemy.types import DateTime
+from datetime import datetime
 
 import os
 environment = os.getenv("FLASK_ENV")
@@ -13,3 +16,9 @@ def add_prefix_for_prod(attr):
         return f"{SCHEMA}.{attr}"
     else:
         return attr
+
+
+
+class TimestampMixin(object):
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
