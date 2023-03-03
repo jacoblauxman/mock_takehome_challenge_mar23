@@ -12,8 +12,8 @@ class Coffee(db.Model, TimestampMixin):
   id = Column(Integer, primary_key=True, nullable=False)
   name = Column(String(255), nullable=False)
   year = Column(Integer, nullable=False)
-  caffeine_content = Column(Numeric(precision=4, scale=2), nullable=False)
-  caffeine_percentage = Column(Numeric(precision=4, scale=2), nullable=False)
+  caffeine_content = Column(Numeric(precision=4, scale=2), nullable=False, default=1)
+  caffeine_percentage = Column(Numeric(precision=4, scale=2), nullable=False, default=1)
 
   posts = relationship("Post", back_populates="coffee")
 
