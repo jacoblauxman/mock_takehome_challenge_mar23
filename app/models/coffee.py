@@ -22,10 +22,21 @@ class Coffee(db.Model, TimestampMixin):
           "id": self.id,
           "name": self.name,
           "year": self.year,
-          "caffeineContent": self.caffeine_content,
-          "caffeinePercentage": self.caffeine_percentage,
+          "caffeineContent": float(self.caffeine_content),
+          "caffeinePercentage": float(self.caffeine_percentage),
           "createdAt": self.created_at,
           "updatedAt": self.updated_at,
 
           "posts": [post.to_dict() for post in self.posts]
+      }
+
+  def to_dict_no_posts(self):
+      return {
+          "id": self.id,
+          "name": self.name,
+          "year": self.year,
+          "caffeineContent": float(self.caffeine_content),
+          "caffeinePercentage": float(self.caffeine_percentage),
+          "createdAt": self.created_at,
+          "updatedAt": self.updated_at,
       }

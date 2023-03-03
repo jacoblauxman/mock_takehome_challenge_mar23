@@ -27,6 +27,17 @@ class Post(db.Model, TimestampMixin):
           "coffeeId": self.coffee_id,
           "createdAt": self.created_at,
           "updatedAt": self.updated_at,
+      }
 
-          "coffee": self.coffee.to_dict()
+  def to_dict_w_coffee(self):
+      return {
+          "id": self.id,
+          "title": self.title,
+          "text": self.text,
+          "rating": self.rating,
+          "coffeeId": self.coffee_id,
+          "createdAt": self.created_at,
+          "updatedAt": self.updated_at,
+
+          "coffee": self.coffee.to_dict_no_posts()
       }
