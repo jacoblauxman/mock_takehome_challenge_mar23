@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import db, Post, Coffee
+from app.forms import PostForm
 
 post_routes = Blueprint('post', __name__)
 
@@ -26,6 +27,18 @@ def get_one_post(id):
     return {"post": post.to_dict_w_coffee()}
 
 
+@post_routes.route("/", methods=["POST"])
+def add_one_post():
+    form = PostForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        new_post = Post(
+            title=form.data['title'],
+            text=form.data['text'],
+            rating=form.data['rating']
+        )
+
 @post_routes.route("/<int:id>", methods=["DELETE"])
 def delete_one_post(id):
     post = Post.query.get(id)
@@ -50,7 +63,6 @@ def get_posts_by_coffee():
 
     else:
         posts = Post.query.where(Post.coffee.has(Coffee.name == args['name'])).order_by(Post.created_at.asc()).all()
-
 
     if len(posts)==0:
         return {'posts': [], 'message': ["No Results Found! Refine your search and try again!"]}
