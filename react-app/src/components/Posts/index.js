@@ -8,6 +8,7 @@ export default function Posts() {
   const [postsList, setPostsList] = useState([])
   const dispatch = useDispatch()
   const posts = useSelector(state => state.posts.posts)
+  console.log(posts, 'POSTS IN OUR POSTS COMPONENT', postsList, "AND POSTSLISTS TO COMPARE")
 
   useEffect(() => {
     if (!isLoaded) {
@@ -24,12 +25,12 @@ export default function Posts() {
   return (
     <div>
       {postsList.length}
-      {posts && postsList.forEach(post => (
+      {posts && postsList.length > 0 && postsList.forEach(p => (
         <div>
-          <div>{post?.title}</div>
+          <div>{p?.title}</div>
           <div>{postsList.length}</div>
-          <div>{post?.text}</div>
-          {console.log(post.title, 'TESTING FOR POST!!')}
+          <div>{p?.text}</div>
+          {console.log(p.title, 'TESTING FOR POST!!')}
         </div>
       ))}
 
