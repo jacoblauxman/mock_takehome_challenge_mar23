@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
-from flask_login import login_required
 from app.models import db, Post, Coffee
 from app.forms import PostForm
+from app.api.auth_routes import validation_errors_to_error_messages
+
 
 post_routes = Blueprint('post', __name__)
 
@@ -28,7 +29,7 @@ def get_one_post(id):
 
 
 @post_routes.route("/", methods=["POST"])
-def add_one_post():
+def add_post():
     form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -39,7 +40,14 @@ def add_one_post():
             rating=form.data['rating'],
             coffee_id=form.data['coffee']
         )
-        
+
+        db.session.add(new_post)
+        db.session.commit()
+
+        return {'post': new_post.to_dict()}
+
+    else:
+        return {"errors": validation_errors_to_error_messages(form.errors)}, 400
 
 @post_routes.route("/<int:id>", methods=["DELETE"])
 def delete_one_post(id):
