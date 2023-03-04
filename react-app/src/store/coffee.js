@@ -5,33 +5,33 @@ const DELETE_A_COFFEE = 'coffee/DELETE_A_COFFEE'
 
 const setCoffees = (coffees) => ({
   type: GET_ALL_COFFEE,
-  payload: coffees
+  ...coffees
 })
 
 const setCoffee = (coffee) => ({
   type: GET_A_COFFEE,
-  payload: coffee
+  ...coffee
 })
 
 const addCoffee = (coffee) => ({
   type: ADD_A_COFFEE,
-  payload: coffee
+  ...coffee
 })
 
 const deleteCoffee = (coffeeId) => ({
   type: DELETE_A_COFFEE,
-  payload: coffeeId
+  coffeeId
 })
 
 
 export const fetchCoffee = () => async dispatch => {
-  const res = await fetch(`/api/coffee`)
+  const res = await fetch(`/api/coffee/`)
 
   if (res.ok) {
-    const coffee = await res.json()
-    dispatch(setCoffees(coffee))
+    const coffees = await res.json()
+    dispatch(setCoffees(coffees))
 
-    return coffee
+    return coffees
   }
 }
 
@@ -71,7 +71,7 @@ export const fetchDeleteCoffee = (coffeeId) => async dispatch => {
   if (res.ok) {
     dispatch(deleteCoffee(coffeeId))
 
-    return {"message": "Successfully Deleted Coffee. Good Bye, Bean Juice!"}
+    return { "message": "Successfully Deleted Coffee. Good Bye, Bean Juice!" }
   }
 }
 
@@ -83,7 +83,7 @@ export default function reducer(state = initialState, action) {
 
     case GET_ALL_COFFEE: {
       const loadState = { ...state, coffee: { ...state.coffee }, oneCoffee: { ...state.oneCoffee } }
-      action.coffees.coffees.forEach(coffee => {
+      action.coffees.forEach(coffee => {
         loadState.coffee[coffee.id] = coffee;
       })
 

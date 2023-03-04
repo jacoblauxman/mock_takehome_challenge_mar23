@@ -14,7 +14,7 @@ def get_post_ping():
 @post_routes.route("/")
 def get_all_posts():
     posts = Post.query.order_by(Post.created_at.asc()).all()
-    res = [p.to_dict_w_coffee for p in posts]
+    res = [p.to_dict_w_coffee() for p in posts]
 
     return {"posts": res}
 

@@ -5,27 +5,27 @@ const DELETE_A_POST = 'coffee/DELETE_A_POST'
 
 const setPosts = (posts) => ({
   type: GET_ALL_POSTS,
-  payload: posts
+  ...posts
 })
 
 const setPost = (post) => ({
   type: GET_A_POST,
-  payload: post
+  ...post
 })
 
 const addPost = (post) => ({
   type: ADD_A_POST,
-  payload: post
+  ...post
 })
 
 const deletePost = (postId) => ({
   type: DELETE_A_POST,
-  payload: postId
+  postId
 })
 
 
 export const fetchPosts = () => async dispatch => {
-  const res = await fetch(`/api/post`)
+  const res = await fetch(`/api/post/`)
 
   if (res.ok) {
     const posts = await res.json()
@@ -71,7 +71,7 @@ export const fetchDeletePost = (postId) => async dispatch => {
   if (res.ok) {
     dispatch(deletePost(postId))
 
-    return {"message": "Successfully Deleted Post. Good Bye, Brain Stew!"}
+    return { "message": "Successfully Deleted Post. Good Bye, Brain Stew!" }
   }
 }
 
@@ -82,7 +82,7 @@ export default function reducer(state = initialState, action) {
 
     case GET_ALL_POSTS: {
       const loadState = { ...state, posts: { ...state.posts }, onePost: { ...state.onePost } }
-      action.posts.posts.forEach(post => {
+      action.posts.forEach(post => {
         loadState.posts[post.id] = post;
       })
 
