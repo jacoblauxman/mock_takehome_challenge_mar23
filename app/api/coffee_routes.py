@@ -28,7 +28,7 @@ def get_one_coffee(id):
     return {"coffee": coffee.to_dict()}
 
 
-@coffee_routes.route("/", methods=["POST"])
+@coffee_routes.route("/create", methods=["POST"])
 def add_coffee():
     form = CoffeeForm()
     form['csrf_token'].data = request.cookies['csrf_token']
