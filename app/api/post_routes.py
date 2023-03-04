@@ -36,8 +36,10 @@ def add_one_post():
         new_post = Post(
             title=form.data['title'],
             text=form.data['text'],
-            rating=form.data['rating']
+            rating=form.data['rating'],
+            coffee_id=form.data['coffee']
         )
+        
 
 @post_routes.route("/<int:id>", methods=["DELETE"])
 def delete_one_post(id):

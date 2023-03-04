@@ -10,7 +10,7 @@ class Coffee(db.Model, TimestampMixin):
         __table_args__ = {'schema': SCHEMA}
 
   id = Column(Integer, primary_key=True, nullable=False)
-  name = Column(String(255), nullable=False)
+  name = Column(String(255), nullable=False, unique=True)
   year = Column(Integer, nullable=False)
   caffeine_content = Column(Numeric(precision=4, scale=2), nullable=False, default=1)
   caffeine_percentage = Column(Numeric(precision=4, scale=2), nullable=False, default=1)
