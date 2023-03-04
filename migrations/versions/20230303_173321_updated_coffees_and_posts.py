@@ -1,8 +1,8 @@
-"""added_coffees_and_posts
+"""updated coffees and posts
 
-Revision ID: 80344b174bdf
+Revision ID: 39edb5aa5ae3
 Revises:
-Create Date: 2023-03-03 12:57:29.555196
+Create Date: 2023-03-03 17:33:21.268679
 
 """
 from alembic import op
@@ -12,8 +12,9 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
+
 # revision identifiers, used by Alembic.
-revision = '80344b174bdf'
+revision = '39edb5aa5ae3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,7 +30,8 @@ def upgrade():
     sa.Column('year', sa.Integer(), nullable=False),
     sa.Column('caffeine_content', sa.Numeric(precision=4, scale=2), nullable=False),
     sa.Column('caffeine_percentage', sa.Numeric(precision=4, scale=2), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
